@@ -1,0 +1,15 @@
+/* src/components/Slider.css */
+.slider-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .slick-dots li button:before {
+    color: white;
+  }
+  
+  .slick-prev, .slick-next {
+    color: white;
+  }
+  
