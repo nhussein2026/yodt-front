@@ -1,10 +1,9 @@
+// src/app/store.js
 import { configureStore } from '@reduxjs/toolkit';
-// import scholarReducer from './features/scholar/scholarSlice';
+import authReducer from './features/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
-    // scholar: scholarReducer,s
+    auth: authReducer,
   },
 });
-
-export default store;

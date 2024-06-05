@@ -1,74 +1,99 @@
-// src/components/Login.js
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login, setUserRole } from "../features/auth/authSlice";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+      const data = await response.json();
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || 'Login failed');
+        const errorMessage = data.errors ? data.errors[0].msg : data.msg;
+        setError(errorMessage || "An error occurred while logging in");
+        return;
       }
 
-      const result = await response.json();
-      alert('Login successful!');
-      // Store the token or handle post-login actions here
+      setSuccessMessage(data.msg);
+      setError("");
+      //set token and user  role in Redux and localstorage
+      const { token, role } = data;
+      dispatch(login(token));
+      dispatch(setUserRole(role));
+      navigate("/");
     } catch (error) {
-      alert(`Login failed. ${error.message}`);
+      setError("An error occurred while logging in");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+    <div className="flex items-center justify-center min-h-screen bg-neutral-background">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-neutral-text">Login</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {successMessage && (
+          <p className="text-green-500 mb-4">{successMessage}</p>
+        )}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-neutral-text mb-2" htmlFor="email">
+              Email
+            </label>
             <input
               type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="block w-full p-2 border border-gray-300 rounded mt-1"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 border border-neutral-border rounded-lg"
               required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+          <div className="mb-6">
+            <label className="block text-neutral-text mb-2" htmlFor="password">
+              Password
+            </label>
             <input
               type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="block w-full p-2 border border-gray-300 rounded mt-1"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 border border-neutral-border rounded-lg"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-[#be2423] text-white py-2 px-4 rounded hover:bg-[#231f20] transition duration-300"
+            className="w-full bg-[#be2423] text-white hover:bg-[#231f20] py-3 rounded-lg hover:bg-primary-dark"
           >
             Login
           </button>
         </form>
+        <p className="mt-4 text-neutral-subtle text-center">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="text-secondary hover:text-[#be2423] underline"
+          >
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,14 +1,17 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
+import  Home  from "./pages/Home";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import { About } from "./pages/About";
+import  About  from "./pages/About";
 import { NotFound } from "./pages/NotFound";
-import PageLayout from "./components/layout/LayoutPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Volunteering from "./pages/Volunteering";
+import Profile from "./pages/Profile";
+import Services from "./pages/Service";
+import TrackApplication from "./pages/TrackApplication";
+import Notification from "./components/layout/Notification";
 
 const App = () => {
   return (
@@ -20,9 +23,14 @@ const App = () => {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route path="/volunteering" element={<Volunteering />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/track-application" element={<TrackApplication />} />
+          <Route path="/notify" element={<Notification />} />
 
-          <Route path="/*" element={<PageLayout><NotFound /></PageLayout>} />
-          <Route path="/about" element={<PageLayout><About /></PageLayout>} />
+
+          <Route path="/*" element={<NotFound />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </main>
       <Footer />
