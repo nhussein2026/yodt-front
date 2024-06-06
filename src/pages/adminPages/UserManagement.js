@@ -4,7 +4,21 @@ import { useSelector } from 'react-redux';
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
-  const [editForm, setEditForm] = useState({ name: '', email: '', role: '' });
+  const [editForm, setEditForm] = useState({
+    name: '',
+    username: '',
+    email: '',
+    universityName: '',
+    studentId: '',
+    studyingYear: '',
+    phoneNumber: '',
+    membershipId: '',
+    role: '',
+    isConfirmed: false,
+    volunteeringHours: 0,
+    applicationStatus: 'Submitted',
+    trackingCode: '',
+  });
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -36,11 +50,26 @@ const UserManagement = () => {
 
   const startEditUser = (user) => {
     setEditingUser(user);
-    setEditForm({ name: user.name, email: user.email, role: user.role });
+    setEditForm({
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      universityName: user.universityName,
+      studentId: user.studentId,
+      studyingYear: user.studyingYear,
+      phoneNumber: user.phoneNumber,
+      membershipId: user.membershipId,
+      role: user.role,
+      isConfirmed: user.isConfirmed,
+      volunteeringHours: user.volunteeringHours,
+      applicationStatus: user.applicationStatus,
+      trackingCode: user.trackingCode,
+    });
   };
 
   const handleEditFormChange = (e) => {
-    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setEditForm({ ...editForm, [name]: type === 'checkbox' ? checked : value });
   };
 
   const saveUser = () => {
@@ -73,12 +102,57 @@ const UserManagement = () => {
               <input type="text" name="name" value={editForm.name} onChange={handleEditFormChange} />
             </label>
             <label>
+              Username:
+              <input type="text" name="username" value={editForm.username} onChange={handleEditFormChange} />
+            </label>
+            <label>
               Email:
               <input type="email" name="email" value={editForm.email} onChange={handleEditFormChange} />
             </label>
             <label>
+              University Name:
+              <input type="text" name="universityName" value={editForm.universityName} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Student ID:
+              <input type="text" name="studentId" value={editForm.studentId} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Studying Year:
+              <input type="number" name="studyingYear" value={editForm.studyingYear} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Phone Number:
+              <input type="text" name="phoneNumber" value={editForm.phoneNumber} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Membership ID:
+              <input type="text" name="membershipId" value={editForm.membershipId} onChange={handleEditFormChange} />
+            </label>
+            <label>
               Role:
               <input type="text" name="role" value={editForm.role} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Confirmed:
+              <input type="checkbox" name="isConfirmed" checked={editForm.isConfirmed} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Volunteering Hours:
+              <input type="number" name="volunteeringHours" value={editForm.volunteeringHours} onChange={handleEditFormChange} />
+            </label>
+            <label>
+              Application Status:
+              <select name="applicationStatus" value={editForm.applicationStatus} onChange={handleEditFormChange}>
+                <option value="Submitted">Submitted</option>
+                <option value="Pending Review">Pending Review</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </label>
+            <label>
+              Tracking Code:
+              <input type="text" name="trackingCode" value={editForm.trackingCode} onChange={handleEditFormChange} />
             </label>
             <button type="submit">Save</button>
             <button type="button" onClick={() => setEditingUser(null)}>Cancel</button>
@@ -90,8 +164,18 @@ const UserManagement = () => {
             <tr>
               <th className="border px-4 py-2">ID</th>
               <th className="border px-4 py-2">Name</th>
+              <th className="border px-4 py-2">Username</th>
               <th className="border px-4 py-2">Email</th>
+              <th className="border px-4 py-2">University Name</th>
+              <th className="border px-4 py-2">Student ID</th>
+              <th className="border px-4 py-2">Studying Year</th>
+              <th className="border px-4 py-2">Phone Number</th>
+              <th className="border px-4 py-2">Membership ID</th>
               <th className="border px-4 py-2">Role</th>
+              <th className="border px-4 py-2">Confirmed</th>
+              <th className="border px-4 py-2">Volunteering Hours</th>
+              <th className="border px-4 py-2">Application Status</th>
+              <th className="border px-4 py-2">Tracking Code</th>
               <th className="border px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -100,8 +184,18 @@ const UserManagement = () => {
               <tr key={user._id}>
                 <td className="border px-4 py-2">{user._id}</td>
                 <td className="border px-4 py-2">{user.name}</td>
+                <td className="border px-4 py-2">{user.username}</td>
                 <td className="border px-4 py-2">{user.email}</td>
+                <td className="border px-4 py-2">{user.universityName}</td>
+                <td className="border px-4 py-2">{user.studentId}</td>
+                <td className="border px-4 py-2">{user.studyingYear}</td>
+                <td className="border px-4 py-2">{user.phoneNumber}</td>
+                <td className="border px-4 py-2">{user.membershipId}</td>
                 <td className="border px-4 py-2">{user.role}</td>
+                <td className="border px-4 py-2">{user.isConfirmed ? 'Yes' : 'No'}</td>
+                <td className="border px-4 py-2">{user.volunteeringHours}</td>
+                <td className="border px-4 py-2">{user.applicationStatus}</td>
+                <td className="border px-4 py-2">{user.trackingCode}</td>
                 <td className="border px-4 py-2">
                   <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
                     onClick={() => startEditUser(user)}>
