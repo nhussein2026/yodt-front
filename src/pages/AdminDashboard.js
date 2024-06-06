@@ -7,9 +7,9 @@ const AdminDashboard = () => {
   return (
     <div>
       <UserManagement />
-      <ServiceManagement />
+      {/* <ServiceManagement />
       <VolunteeringManagement />
-      <PostManagement />
+      <PostManagement /> */}
     </div>
   );
 };

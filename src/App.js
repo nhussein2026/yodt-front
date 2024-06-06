@@ -12,6 +12,10 @@ import Profile from "./pages/Profile";
 import Services from "./pages/Service";
 import TrackApplication from "./pages/TrackApplication";
 import Notification from "./components/layout/Notification";
+import ServiceManagement from "./pages/adminPages/ServiceManagment";
+import VolunteeringManagement from "./pages/adminPages/VolunteeringManagment";
+import UserManagement from "./pages/adminPages/UserManagement";
+import PostManagement from "./pages/adminPages/PostManagment";
 
 const App = () => {
   return (
@@ -27,6 +31,10 @@ const App = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/track-application" element={<TrackApplication />} />
           <Route path="/notify" element={<Notification />} />
+          <Route path="/service-management" element={<ServiceManagement />} />
+          <Route path="/volunteering-management" element={<VolunteeringManagement />} />
+          <Route path="/user-management" element={<UserManagement />} />
+          <Route path="/post-management" element={<PostManagement />} />
 
 
           <Route path="/*" element={<NotFound />} />
