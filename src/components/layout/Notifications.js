@@ -1,7 +1,7 @@
 // Notifications.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import NotificationItem from './NotificationItem';
+import { useSelector } from 'react-redux';
 import Notification from './Notification';
 
 const Notifications = () => {
