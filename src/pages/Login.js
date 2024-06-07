@@ -10,7 +10,6 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,7 +23,6 @@ const Login = () => {
         }
       );
       const data = await response.json();
-
       if (!response.ok) {
         const errorMessage = data.errors ? data.errors[0].msg : data.msg;
         setError(errorMessage || "An error occurred while logging in");
