@@ -17,6 +17,7 @@ import VolunteeringManagement from "./pages/adminPages/VolunteeringManagment";
 import UserManagement from "./pages/adminPages/UserManagement";
 import PostManagement from "./pages/adminPages/PostManagment";
 import Contact from "./pages/Contact";
+import News from "./pages/News";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/*" element={<NotFound />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/news" element={<News />} />
         </Routes>
       </main>
       <Footer />
